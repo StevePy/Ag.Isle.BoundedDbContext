@@ -36,5 +36,18 @@ An auto-refreshing caching implementation for lookup-type entities which will wo
 to check for tracked references, prioritizing those, before cloning and attaching a cached entity if available.
 
 ScopedEntityCache
+
 A version of the EntityCache which integrates with the DbContextScope unit of work pattern to automatically integrate
 with any DbContext currently in a DbContextScope for read/refresh, tracking cache checks, and attaching.
+
+RecompileInterceptor
+
+A DbCommandInterceptor implementation that looks for a comment tag to add an OPTION (RECOMPILE) to the query. Add the interceptor to your DbContext configuration, then you can use the extension method .WithRecompile() to append it to your query.
+
+DisableRowGoalInterceptor
+
+A DbCommandInterceptor implementation that looks for a comment tag to add the Hint for DISABLE_OPTIMIZER_ROWGOAL. Add the interceptor to your DbContext configuration, then you can use the extension method .WithNoRowGoal() to append it to your query.
+
+OptionFinder
+
+A static helper class for going through an SQL statement to look for an OPTION() section and append/insert options. This enables multiple interceptors to append options to an SQL statement.
